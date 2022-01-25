@@ -17,21 +17,19 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/urls', (req, res) => {
-	// console.log(req.body);
-	// res.send('Hello');
 	const shortURL = rndmNum();
 	urlDatabase[shortURL] = req.body.longURL;
 	res.redirect(`/urls/${shortURL}`);
 });
 
+app.post('/urls/:shortURL/delete', (req, res) => {
+	delete urlDatabase[req.params.shortURL];
+	res.redirect(`/urls`);
+});
+
 app.get('/u/:shortURL', (req, res) => {
 	const longURL = urlDatabase[req.params.shortURL];
 	res.redirect(longURL);
-});
-
-app.get('/example/:apple/:orange', (req, res) => {
-	console.log(req.params);
-	res.send('example');
 });
 
 app.get('/urls/new', (req, res) => {
