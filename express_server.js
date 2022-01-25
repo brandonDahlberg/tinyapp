@@ -3,9 +3,10 @@ const app = express();
 const port = 3001;
 app.set('view engine', 'ejs');
 
-function generateRandomString() {
-
-}
+const rndmNum = function () {
+	let rndmStr = (Math.random() + 1).toString(36).substring(7);
+	return rndmStr;
+};
 
 const urlDatabase = {
 	b2xVn2: 'http://www.lighthouselabs.ca',
@@ -16,8 +17,21 @@ const bodyParser = require('body-parser');
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.post('/urls', (req, res) => {
-	console.log(req.body);
-	res.send('Ok');
+	// console.log(req.body);
+	// res.send('Hello');
+	const shortURL = rndmNum();
+	urlDatabase[shortURL] = req.body.longURL;
+	res.redirect(`/urls/${shortURL}`);
+});
+
+app.get('/u/:shortURL', (req, res) => {
+	const longURL = urlDatabase[req.params.shortURL];
+	res.redirect(longURL);
+});
+
+app.get('/example/:apple/:orange', (req, res) => {
+	console.log(req.params);
+	res.send('example');
 });
 
 app.get('/urls/new', (req, res) => {
