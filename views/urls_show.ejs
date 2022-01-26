@@ -8,7 +8,7 @@
 			integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 			crossorigin="anonymous"
 		/>
-		<title>URL - TinyApp Example</title>
+		<title>TinyApp</title>
 	</head>
 
 	<body>
@@ -19,6 +19,9 @@
 				<h5 class="card-title">TinyURL for: <%= longURL %></h5>
 				<p class="card-text">Short URL: <a href="/u/<%= shortURL %>"><%= shortURL %></a></p>
 			</div>
+			<form method="POST" action="/urls/<%= shortURL %>">
+				New URL <input type="text" name="longURL" /><button type="submit" class="btn">Submit</button>
+			</form>
 			<div class="card-footer text-muted"></div>
 		</div>
 		<!-- Bootstrap JS -->
